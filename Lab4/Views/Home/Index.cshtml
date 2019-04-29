@@ -1,0 +1,130 @@
+﻿@model IEnumerable<Lab4.Models.Movie>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<html>
+
+<body>
+    <header>
+        <h3>Movies Database</h3>
+        <a href="/Home/Index">Home</a>&nbsp;&nbsp;&nbsp;<a href="/Home/AddMovie">Add Movie</a>
+    </header>
+    <div>
+
+
+        <style>
+            tr {
+                vertical-align: central;
+                text-align: center;
+            }
+        </style>
+
+        <h2>Home</h2>
+        @if (Model == null || Model.Count() == 0)
+        {
+            <h4>Currently, there are no movies to display.</h4>
+        }
+        else
+        {
+            <table style="width: 100%;">
+                <tr>
+                    <th>
+                        Options
+                    </th>
+                    <th>
+                        Movie Title
+                    </th>
+                    <th>
+                        Movie SubTitle
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        Rating
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>
+                            <a asp-controller="Home" asp-action="EditMovie" asp-route-id="@item.MovieId">Edit</a>&nbsp; &nbsp;
+                            <br />
+                            <a onclick="return confirm('Are you sure?');" asp-controller="Home" asp-action="DeleteMovie" asp-route-id="@item.MovieId">Delete</a>&nbsp; &nbsp;
+                        </td>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td>
+                            @item.SubTitle
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            @item.Year
+                        </td>
+                        <td>
+                            @item.Rating/5
+                        </td>
+                    </tr>
+
+                }
+            </table>
+        }
+
+    </div>
+    <footer>
+
+        &copy; 2019 - Kevin Lai
+        <br />
+        <br />
+        <div>
+            <h3>SQL For Database and Movies Table</h3>
+            <h4>Create Database</h4>
+            USE [master]
+            <br />
+            GO
+            <br />
+            <br />
+            CREATE DATABASE [Lab4]
+            <br />
+            <br />
+            <h4>Create Movies Table</h4>
+            USE [Lab4]
+            <br />
+            GO
+            <br />
+            <br />
+            CREATE TABLE Movies(
+            <br />
+            [MovieId] [int] NOT NULL PRIMARY KEY IDENTITY(1,1),
+            <br />
+            [Title] [nvarchar](1000) NOT NULL,
+            <br />
+            [SubTitle] [nvarchar](1000) NOT NULL,
+            <br />
+            [Description] [nvarchar](1000) NOT NULL,
+            <br />
+            [Year] [datetime] NOT NULL,
+            <br />
+            [Rating] [int] NOT NULL)
+            <br />
+            GO
+        </div>
+    </footer>
+</body>
+</html>
+

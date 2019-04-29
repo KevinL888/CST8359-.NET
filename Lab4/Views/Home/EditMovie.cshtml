@@ -1,0 +1,124 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Lab4.Models.Movie
+
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<html>
+
+<body>
+    <header>
+        <h3>Movies Database</h3>
+        <a href="/Home/Index">Home</a>&nbsp;&nbsp;&nbsp;<a href="/Home/AddMovie">Add Movie</a>
+    </header>
+    <div>
+
+
+        <style>
+            tr {
+                vertical-align: central;
+                text-align: left;
+            }
+        </style>
+
+        <h2>Home</h2>
+
+        <h3>Add Movie</h3>
+        <form asp-controller="Home" asp-action="ModifyMovie" method="post">
+            <input type="hidden" value="@Model.MovieId" name="MovieId" />
+            <table>
+                <tr>
+                    <td>
+                        Title
+                    </td>
+                    <td>
+                        <input asp-for="Title" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        SubTitle
+                    </td>
+                    <td>
+                        <input asp-for="SubTitle" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Description
+                    </td>
+                    <td>
+                        <input asp-for="Description" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Year
+                    </td>
+                    <td>
+                        <input asp-for="Year" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Rating:
+                    </td>
+                    <td>
+                        <input asp-for="Rating" />
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Edit Movie" />
+        </form>
+    </div>
+    <footer>
+
+        &copy; 2019 - Kevin Lai
+        <br />
+        <br />
+        <div>
+            <h3>SQL For Database and Movies Table</h3>
+            <h4>Create Database</h4>
+            USE [master]
+            <br />
+            GO
+            <br />
+            <br />
+            CREATE DATABASE [Lab4]
+            <br />
+            <br />
+            <h4>Create Movies Table</h4>
+            USE [Lab4]
+            <br />
+            GO
+            <br />
+            <br />
+            CREATE TABLE Movies(
+            <br />
+            [MovieId] [int] NOT NULL PRIMARY KEY IDENTITY(1,1),
+            <br />
+            [Title] [nvarchar](1000) NOT NULL,
+            <br />
+            [SubTitle] [nvarchar](1000) NOT NULL,
+            <br />
+            [Description] [nvarchar](1000) NOT NULL,
+            <br />
+            [Year] [datetime] NOT NULL,
+            <br />
+            [Rating] [int] NOT NULL)
+            <br />
+            GO
+        </div>
+    </footer>
+</body>
+</html>
+
+
+

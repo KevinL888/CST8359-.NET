@@ -1,0 +1,28 @@
+﻿body {
+    border: none;
+    margin: 0;
+    font-family: 'Segoe UI';
+}
+
+header {
+    background-color: aliceblue;
+    border-bottom: solid 1px black;
+    margin: 0;
+    padding: 10px;
+}
+
+footer {
+    background-color: aliceblue;
+    border-top: solid 1px black;
+    margin: 0;
+    padding: 10px;
+}
+
+.content {
+    padding: 10px 10px 10px 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    padding-top: 0;
+}

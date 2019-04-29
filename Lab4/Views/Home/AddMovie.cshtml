@@ -1,0 +1,161 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Lab4.Models.Movie
+
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<script>
+
+    function validation() {
+        if (document.getElementById('Title').value =="") {
+            alert('Please enter a Title');
+            document.getElementById('Title').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('SubTitle').value == "") {
+            alert('Please enter a SubTitle');
+            document.getElementById('SubTitle').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Description').value == "") {
+            alert('Please enter a Description');
+            document.getElementById('Description').style.borderColor = "red";
+            return false;
+        }
+
+        if (Date.parse(document.getElementById('Year').value) == NaN || document.getElementById('Year').value == "") {
+            alert('Please enter a valid Date');
+            return false;
+        }
+        
+        if (document.getElementById('Rating').value < 1 || document.getElementById('Rating').value > 5) {
+            alert('Please enter a Rating between 1 to 5 inclusive');
+            document.getElementById('Rating').style.borderColor = "red";
+            return false;
+        }
+    }
+</script>
+
+<html>
+
+<body>
+    <header>
+        <h3>Movies Database</h3>
+        <a href="/Home/Index">Home</a>&nbsp;&nbsp;&nbsp;<a href="/Home/AddMovie">Add Movie</a>
+    </header>
+    <div>
+
+
+        <style>
+            tr {
+                vertical-align: central;
+                text-align: left;
+            }
+        </style>
+
+        <h2>Home</h2>
+
+        <h3>Add Movie</h3>
+        <form asp-controller="Home" asp-action="CreateMovie" method="post" onsubmit="return validation()">
+            <table>
+                <tr>
+                    <td>
+                        Title
+                    </td>
+                    <td>
+                        <input type="text" data-val="true" data-val-length="The field Title must be a string with a maximum length of 1000." data-val-length-max="1000" data-val-required="The Title field is required." id="Title" name="Title" value="" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        SubTitle
+                    </td>
+                    <td>
+                        <input type="text" data-val="true" data-val-length="The field SubTitle must be a string with a maximum length of 1000." data-val-length-max="1000" data-val-required="The SubTitle field is required." id="SubTitle" name="SubTitle" value="" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Description
+                    </td>
+                    <td>
+                        <input type="text" data-val="true" data-val-length="The field Description must be a string with a maximum length of 1000." data-val-length-max="1000" data-val-required="The Description field is required." id="Description" name="Description" value="" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Year
+                    </td>
+                    <td>
+                        <input type="date" data-val="true" data-val-required="The Year field is required." id="Year" name="Year" value="" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Rating
+                    </td>
+                    <td>
+                        <input type="number" data-val="true" data-val-range="The field Rating must be between 1 and 5." data-val-range-max="5" data-val-range-min="1" data-val-required="The Rating field is required." id="Rating" name="Rating" value="" />
+
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Add Movie" />
+        </form>
+
+    </div>
+    <footer>
+
+        &copy; 2019 - Kevin Lai
+        <br />
+        <br />
+        <div>
+            <h3>SQL For Database and Movies Table</h3>
+            <h4>Create Database</h4>
+            USE [master]
+            <br />
+            GO
+            <br />
+            <br />
+            CREATE DATABASE [Lab4]
+            <br />
+            <br />
+            <h4>Create Movies Table</h4>
+            USE [Lab4]
+            <br />
+            GO
+            <br />
+            <br />
+            CREATE TABLE Movies(
+            <br />
+            [MovieId] [int] NOT NULL PRIMARY KEY IDENTITY(1,1),
+            <br />
+            [Title] [nvarchar](1000) NOT NULL,
+            <br />
+            [SubTitle] [nvarchar](1000) NOT NULL,
+            <br />
+            [Description] [nvarchar](1000) NOT NULL,
+            <br />
+            [Year] [datetime] NOT NULL,
+            <br />
+            [Rating] [int] NOT NULL)
+            <br />
+            GO
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
