@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<html>
+<body>
+    <h3>Table</h3>
+    <table style="border: solid 1px black; border-collapse: collapse;">
+
+        @for (var i = 0; i < 4; i++)
+            {
+            <tr style="margin: 0; border-spacing: 0;">
+                @for (var j = 1; j < 11; j++)
+                {
+
+                    <td style="width: 240px; height:50px; border: solid 2px black; padding: 4px;">@(i * 10 + j)</td>
+                }
+            </tr>
+        }
+
+    </table>
+
+    <h3>99 Bottles of Beer</h3>
+    @for (var i = 99; i > 0; i--)
+    {
+        <p>@i bottles of beer on the wall, @i bottles of beer. You take one down, you pass it around, @(i - 1)<br /></p>
+        @if (i % 20 == 0)
+        {
+            <p>WOOO!</p>
+        }
+        @if (i == 49)
+        {
+            <p>awwww :(</p>
+        }
+    }
+
+
+    <br />
+    <br />
+    <br />
+    <a href="/Index">Go Home</a>
+</body>
+</html>

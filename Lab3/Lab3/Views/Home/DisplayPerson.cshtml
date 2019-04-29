@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Lab3.Core.Models.Person
+
+<h3>Display Person</h3>
+
+@if (Model != null)
+{
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td>@Model.FirstName</td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td>@Model.LastName</td>
+        </tr>
+        <tr>
+            <td>Age:</td>
+            <td>@Model.Age</td>
+        </tr>
+        <tr>
+            <td>Email Address:</td>
+            <td>@Model.EmailAddress</td>
+        </tr>
+        <tr>
+            <td>Date of Birth:</td>
+            <td>@Model.DateofBirth</td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td>@Model.Password</td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td>@Model.Description</td>
+        </tr>
+    </table>
+
+    <br />
+        <br />
+        <br />
+        <a href="/Index">Go Home</a>
+
+}

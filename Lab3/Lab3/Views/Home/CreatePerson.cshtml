@@ -1,0 +1,74 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Lab3.Core.Models.Person
+
+<h3>Create Person</h3>
+<form asp-controller="Home" action="DisplayPerson" method="post">
+    <table>
+        <tr>
+            <td>
+                First Name:
+            </td>
+            <td>
+                <input type="text" id="FirstName" name="FirstName" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Last Name:
+            </td>
+            <td>
+                <input type="text" id="LastName" name="LastName" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Age:
+            </td>
+            <td>
+                <input type="number" id="Age" name="Age" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Email Address:
+            </td>
+            <td>
+                <input type="email" id="EmailAddress" name="EmailAddress" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Date of Birth:
+            </td>
+            <td>
+                <input type="date" id="DateofBirth" name="DateofBirth" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Password:
+            </td>
+            <td>
+                <input type="password" id="Password" name="Password" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Description:
+            </td>
+            <td>
+                <input type="text" height="75" id="Description" multiple name="Description" value="" />
+            </td>
+        </tr>
+    </table>
+        <input type="submit" value="Submit" />
+</form>
+
+<br />
+<br />
+<br />
+<a href="/Index">Go Home</a>
