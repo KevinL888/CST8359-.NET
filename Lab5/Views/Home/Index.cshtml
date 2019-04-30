@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<Lab5.Models.Photo>
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Files";
+}
+
+
+<div class="page-header">
+    <h2>Image Upload</h2>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <form asp-controller="Home" enctype="multipart/form-data" asp-action="UploadFileNow" method="post">
+            <input type="file" name="files" multiple /> <button name="upload">Upload Now</button>
+            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8Gt_ASAzhBVEl8fuGmuH0G92PIUdzcynPD-5h4P2_YUo8PLyw1JzXJlNwf4QY4fQOZF2fpz47ltx6eQkuQO_ZAPechHiD5DzQtTTXjKrq6n9aJnczZQTJpa_oUP9_t6JI0sPlmKZ9_R2pxeR_Fr6Ec4" />
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Currently Uploaded Images</h2>
+
+        @if (Model.Count() == 0)
+        {
+            <p>There are no files to display.</p>
+        }
+        else
+        {
+            @foreach (var photo in Model)
+            {
+
+                <div class="col-sm-3">
+                    <div>
+                        <img src="@photo.Url" style="width: 100%;" />
+                        <br />
+                        @photo.FileName
+                        <br />
+                        <a onclick="return confirm('Are you sure you wante to delete this image?');" asp-controller="Home" asp-action="DeleteImageNow" asp-route-id="@photo.PhotoId">Delete</a>
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+</div>
+
