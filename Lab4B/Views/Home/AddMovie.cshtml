@@ -1,0 +1,89 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Lab4.Models.Movie
+
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<script>
+
+    function validation() {
+        if (document.getElementById('Title').value =="") {
+            alert('Please enter a Title');
+            document.getElementById('Title').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('SubTitle').value == "") {
+            alert('Please enter a SubTitle');
+            document.getElementById('SubTitle').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Description').value == "") {
+            alert('Please enter a Description');
+            document.getElementById('Description').style.borderColor = "red";
+            return false;
+        }
+
+        if (Date.parse(document.getElementById('Year').value) == NaN || document.getElementById('Year').value == "") {
+            alert('Please enter a valid Date');
+            return false;
+        }
+        
+        if (document.getElementById('Rating').value < 1 || document.getElementById('Rating').value > 5) {
+            alert('Please enter a Rating between 1 to 5 inclusive');
+            document.getElementById('Rating').style.borderColor = "red";
+            return false;
+        }
+    }
+</script>
+
+<html>
+
+<body>
+    <div class="container" role="main">
+
+        <div class="page-header">
+            <h2>Add Movie</h2>
+        </div>
+
+
+        <form asp-controller="Home" asp-action="CreateMovie" method="post" onsubmit="return validation()">
+            <div class="form-group">
+                <label for="Title">Title</label>
+                <input class="form-control" type="text" data-val="true" data-val-length="The field Title must be a string with a maximum length of 1000." data-val-length-max="1000" data-val-required="The Title field is required." id="Title" name="Title" value="" />
+            </div>
+
+            <div class="form-group">
+                <label for="SubTitle">SubTitle</label>
+                <input class="form-control" type="text" data-val="true" data-val-length="The field SubTitle must be a string with a maximum length of 1000." data-val-length-max="1000" data-val-required="The SubTitle field is required." id="SubTitle" name="SubTitle" value="" />
+            </div>
+            <div class="form-group">
+                <label for="Description">Description</label>
+                <textarea class="form-control" rows="10" data-val="true" data-val-length="The field Description must be a string with a maximum length of 1000." data-val-length-max="1000" data-val-required="The Description field is required." id="Description" name="Description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="Year">Year</label>
+                <input class="form-control" type="date" data-val="true" data-val-required="The Year field is required." id="Year" name="Year" value="" />
+            </div>
+            <div class="form-group">
+                <label for="Rating">Rating</label>
+                <input class="form-control" type="number" data-val="true" data-val-range="The field Rating must be between 1 and 5." data-val-range-max="5" data-val-range-min="1" data-val-required="The Rating field is required." id="Rating" name="Rating" value="" />
+            </div>
+            <br />
+            <input type="submit" value="Add Movie" class="btn btn-default"/>
+        </form>
+
+    </div>
+
+</body>
+</html>
+
+
+
