@@ -1,0 +1,153 @@
+﻿@using Microsoft.AspNetCore.Http
+@model Assignment2.Models.BlogPost
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Edit Blog";
+}
+
+<script>
+    $(document).ready(function () {
+        $('div img').each(function () {
+            if ($(this).width() > $(this).height()) {
+                $(this).css('width', '608px');
+            }
+            else {
+                $(this).css('width', '308px');
+            }
+            $(this).css('height', 'auto');
+        });
+    });
+</script>
+
+<script>
+
+    function validation() {
+        if (document.getElementById('Title').value == "") {
+            alert('Please enter a Title');
+            document.getElementById('Title').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('ShortDescription').value == "") {
+            alert('Please enter a ShortDescription');
+            document.getElementById('ShortDescription').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Content').value == "") {
+            alert('Please enter a Content');
+            document.getElementById('Content').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Posted').value == "") {
+            alert('Please enter a Posted Time');
+            document.getElementById('ShortDescription').style.borderColor = "red";
+            return false;
+        }
+    }
+</script>
+
+<h2>Add Blog Post</h2>
+<br />
+<br />
+
+<form asp-controller="Home" enctype="multipart/form-data" asp-action="EditBlogPostAndRedirect" method="post" onsubmit="return validation()">
+    <input type="hidden" value="@Model.BlogPostId" name="BlogPostId" />
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_Title">Blog Post Title</label>
+        <input class="form-control" asp-for="Title" type="text" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_ShortDescription">Blog Post Short Description</label>
+        <input class="form-control" asp-for="ShortDescription" type="text" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_Content">Blog Post Content</label>
+        <textarea rows="20" class="form-control" asp-for="Content" typeof="text" data-length="4000"></textarea>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_Posted">Posted </label>
+        <input class="form-control" asp-for="Posted" typeof="date" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_IsAvailable">Is Available </label>
+        <input asp-for="IsAvailable" typeof="checkbox" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="Photo_FileName">Add Image: </label>
+        <input type="file" name="files" multiple /><br />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="form-control">Submit</button>
+    </div>
+</form>
+
+
+<br />
+<br />
+<h2>Photos <i class="material-icons">photo_camera</i></h2>
+
+@{ var photoCounter = 0;
+    <div class="row">
+        @foreach (var items in Model.Photo)
+        {
+            if (items.Url.Substring(items.Url.Length - 3, 3).Equals("mp4") || items.Url.Substring(items.Url.Length - 4, 4).Equals("webm"))
+            {
+                continue;
+            }
+
+            <div class="ig" style="text-align: center; margin:0 auto; display:inline-block;">
+                <figure>
+                    <img class="rounded" style="background-color:LightGrey; border: 1px solid DarkGrey; padding:10px; margin-bottom:10px; margin-top:10px;" src="@items.Url" />
+                    <figcaption>@items.Filename</figcaption>
+                    <a onclick="return confirm('Are you sure you wante to delete this image?');" asp-controller="Home" asp-action="DeleteImageNow" asp-route-id="@items.PhotoId">Delete</a>
+                </figure>
+            </div>
+            photoCounter++;
+        }
+    </div>
+
+    if (photoCounter == 0)
+    {
+        <div class="blogpost1">
+            <br />
+            Currently, there are no photos attached to this blog!
+            <br /><br />
+        </div>
+    }
+
+}
+<h2>Videos <i class="material-icons">videocam</i></h2>
+@{ var counter = 0;
+    foreach (var items in Model.Photo)
+    {
+
+        @if (items.Url.Substring(items.Url.Length - 3, 3).Equals("mp4") || items.Url.Substring(items.Url.Length - 4, 4).Equals("webm"))
+        {
+            counter++;
+            <div class="col-auto" style=" text-align:center; display: inline-block; border: 1px solid DarkGrey; background-color: LightGrey; margin: 10px 0px 10px 0px; padding: 30px 20px 30px 20px; border-radius: 10px;">
+
+                <video id="@items.PhotoId" autoplay muted loop controls inline style="width: 75vw; max-width: 95%; ">
+                    <source src="@items.Url" type="video/webm">
+                    <source src="@items.Url" type="video/mp4">
+                </video>
+                <br />
+            </div>
+
+            <figure style="text-align:center;">
+                <figcaption>@items.Filename</figcaption>
+                <a onclick="return confirm('Are you sure you wante to delete this image?');" asp-controller="Home" asp-action="DeleteImageNow" asp-route-id="@items.PhotoId">Delete</a>
+            </figure>
+                }
+
+    }
+
+    if (counter == 0)
+    {
+        <div class="blogpost1">
+            <br />
+            Currently, there are no videos attached to this blog!
+            <br /><br />
+        </div>
+    }
+}

@@ -1,0 +1,191 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Assignment2.Models.BlogPost
+@using Microsoft.AspNetCore.Http;
+
+
+<script>
+    $(document).ready(function () {
+        $('div img').each(function () {
+            if ($(this).width() > $(this).height()) {
+                $(this).css('width', '608px');
+            }
+            else {
+                $(this).css('width', '308px');
+            }
+            $(this).css('height', 'auto');
+        });
+    });
+</script>
+
+<script>
+
+    function validation() {
+        if (document.getElementById('Comment_Content').value == "") {
+            alert('Please enter a Comment');
+            document.getElementById('Comment_Content').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Comment_Rating').value == "") {
+            alert('Please enter a Rating');
+            document.getElementById('Comment_Rating').style.borderColor = "red";
+            return false;
+        }
+    }
+</script>
+
+
+<html>
+<body>
+
+    <h2>@Model.Title</h2>
+    <sub>Written by: @Model.User.FirstName @Model.User.LastName @Model.User.EmailAddress</sub>
+    <br />
+    <sub>Posted on: @Model.Posted</sub>
+    <br />
+    <br />
+    <p>
+        @Model.Content
+    </p>
+    <br />
+
+    <h4>Photos <i class="material-icons">photo_camera</i></h4>
+
+    @{ var photoCounter = 0;
+
+        <div class="row">
+
+            @foreach (var items in Model.Photo)
+            {
+                if (items.Url.Substring(items.Url.Length - 3, 3).Equals("mp4") || items.Url.Substring(items.Url.Length - 4, 4).Equals("webm"))
+                {
+                    continue;
+                }
+
+                <div class="ig" style="text-align: center; margin:0 auto; display:inline-block;">
+                    <figure>
+                        <img class="rounded" style="background-color:LightGrey; border: 1px solid DarkGrey; padding:10px; margin-bottom:10px; margin-top:10px;" src="@items.Url" />
+                        <figcaption>@items.Filename</figcaption>
+                    </figure>
+                </div>
+                photoCounter++;
+            }
+
+        </div>
+
+        if (photoCounter == 0)
+        {
+            <div class="blogpost1">
+                <br />
+                Currently, there are no photos attached to this blog!
+                <br /><br />
+            </div>
+        }
+    }
+
+    <h4>Videos <i class="material-icons">videocam</i></h4>
+
+    @{ var counter = 0;
+        foreach (var items in Model.Photo)
+        {
+
+            @if (items.Url.Substring(items.Url.Length - 3, 3).Equals("mp4") || items.Url.Substring(items.Url.Length - 4, 4).Equals("webm"))
+            {
+                counter++;
+                <div class="col-auto" style=" text-align:center; display: inline-block; border: 1px solid DarkGrey; background-color: LightGrey; margin: 10px 0px 10px 0px; padding: 30px 20px 30px 20px; border-radius: 10px;">                   
+                        <video id="@items.PhotoId" autoplay muted loop controls inline style="width: 75vw; max-width: 95%; ">
+                            <source src="@items.Url" type="video/webm">
+                            <source src="@items.Url" type="video/mp4">
+                        </video>                 
+                </div>
+                <figure style="text-align:center;">
+                    <figcaption>@items.Filename</figcaption>
+                </figure>
+            }
+
+        }
+
+        if (counter == 0)
+        {
+            <div class="blogpost1">
+                <br />
+                Currently, there are no videos attached to this blog!
+                <br /><br />
+            </div>
+        }
+    }
+
+    <h4>Comments <i class="material-icons">comment</i></h4>
+
+    @{
+        var i = 0;
+
+        foreach (var items in Model.Comment)
+        {
+            if (i % 2 == 0)
+            {
+                <div class="blogpost1">
+                    <br />@items.Content<br /><br /><font size="1">Rating: @items.Rating By: @items.User.FirstName @items.User.LastName @items.User.EmailAddress</font><br /><br />
+                </div>
+
+            }
+            else
+            {
+                <div class="blogpost">
+                    <br />@items.Content<br /><br /><font size="1">Rating: @items.Rating By: @items.User.FirstName @items.User.LastName @items.User.EmailAddress</font><br /><br />
+                </div>
+
+            }
+            i++;
+        }
+    }
+
+
+
+    @if (Context.Session.GetString("UserId") == null)
+    {<br />
+        <h4>Log In to Comment</h4>
+        <p><a asp-controller="Home" asp-action="Login">You must Log In to comment</a></p>
+    }
+    else
+    {
+
+        if (Model.Comment.Count == 0)
+        {
+            <div class="blogpost1">
+                <br />
+                Currently, there are no comments. Be the first to post!
+                <br /><br />
+            </div>
+
+        }
+
+        var UserId = Convert.ToInt32(Context.Session.GetString("UserId"));
+
+        <br />
+        <h4>Add Comment</h4>
+        <form asp-controller="Home" asp-action="AddComment" method="post" onsubmit="return validation()">
+            <input type="hidden" id="BlogPostId" name="BlogPostId" value="@Model.BlogPostId" />
+            <input type="hidden" id="UserId" name="UserId" value="UserId" />
+            <div class="form-group">
+                <label class="control-label" for="Comment.Rating">Comment Rating</label>
+                <input class="form-control" type="number" data-val="true" data-val-range="The field Rating must be between 1 and 5." data-val-range-max="5" data-val-range-min="1" data-val-required="The Rating field is required." id="Comment_Rating" name="Comment.Rating" value="" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="Comment.Content">Comment Title</label>
+                <textarea rows="20" class="form-control" id="Comment_Content" name="Comment.Content" typeof="text" data-length="4000"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="form-control">Comment</button>
+            </div>
+        </form>
+    }
+</body>
+</html>
+
+
+
+

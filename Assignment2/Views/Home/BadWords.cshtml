@@ -1,0 +1,87 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Assignment2.Models.BadWord>
+
+<script>
+
+    function validation() {
+        if (document.getElementById('BadWord_Word').value == "") {
+            alert('Please enter a Bad Word');
+            document.getElementById('BadWord_Word').style.borderColor = "red";
+            return false;
+        }
+    }
+</script>
+
+
+@if (TempData["Bad"] != null)
+{
+
+    <div style="width: auto; display: block; border: 1px solid DarkGrey; background-color: #f8ecf8; margin: 10px 0px 10px 0px; padding: 0px 20px 5px 20px; border-radius: 10px;">
+        <span style="color:indianred;"><br /><b>Error!</b> The bad word is already in the list.<br /><br /></span>
+    </div>
+}
+
+<h2>Add Bad Words</h2>
+<br />
+<br />
+
+
+<form asp-controller="Home" asp-action="BadWords" method="post" onsubmit="return validation()">
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_Title">Bad Word</label>
+        <input class="form-control" id="BadWord_Word" name="BadWord.Word" type="text" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="form-control">Submit</button>
+    </div>
+</form>
+
+<br />
+<br />
+<h2>List Of Bad Words</h2>
+<br />
+<br />
+
+@if (Model == null || Model.Count() == 0)
+{
+    <ul class="list-group">
+    <li class="list-group-item">There are no bad words to display.</li>
+        </ul>
+}
+else
+{
+
+    var i = 1;
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Bad Word</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.Word</td>
+                            <td><a class="btn btn-xs btn-danger" onclick="return confirm('Are you sure?');" asp-controller="Home" asp-action="DeleteBadWord" asp-route-id="@item.BadWordId">Delete</a></td>
+                        </tr>
+                        i++;
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    }

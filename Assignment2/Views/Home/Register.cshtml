@@ -1,0 +1,144 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using Microsoft.AspNetCore.Http;
+@model Assignment2.Models.User
+
+<script>
+    function validation() {
+        if (document.getElementById('User_FirstName').value == "") {
+            alert('Please enter a FirstName');
+            document.getElementById('User_FirstName').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('User_LastName').value == "") {
+            alert('Please enter a LastName');
+            document.getElementById('User_LastName').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('User_DateOfBirth').value == "") {
+            alert('Please enter a DateOfBirth');
+            document.getElementById('User_DateOfBirth').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('User_Address').value == "") {
+            alert('Please enter a Address');
+            document.getElementById('User_Address').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('User_PostalCode').value == "") {
+            alert('Please enter a PostalCode');
+            document.getElementById('User_PostalCode').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('User_City').value == "") {
+            alert('Please enter a City');
+            document.getElementById('User_City').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('User_Country').value == "") {
+            alert('Please enter a Country');
+            document.getElementById('User_Country').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('User_EmailAddress').value == "") {
+            alert('Please enter a EmailAddress');
+            document.getElementById('User_EmailAddress').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('User_Password').value == "") {
+            alert('Please enter a Password');
+            document.getElementById('User_Password').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('User_RoleId').value == "") {
+            alert('Please select a Role');
+            document.getElementById('User_RoleId').style.borderColor = "red";
+            return false;
+        }
+    }
+</script>
+
+<html>
+
+<body>
+
+    @if (TempData["Register"] != null)
+    {
+
+        <div style="width: auto; display: block; border: 1px solid DarkGrey; background-color: #f8ecf8; margin: 10px 0px 10px 0px; padding: 0px 20px 5px 20px; border-radius: 10px;">
+            <span style="color:indianred;"><br /><b>Error!</b> The email address is already in use.<br /><br /></span>
+        </div>
+    }
+    else if (TempData["NullField"] != null)
+    {
+        <div style="width: auto; display: block; border: 1px solid DarkGrey; background-color: #f8ecf8; margin: 10px 0px 10px 0px; padding: 0px 20px 5px 20px; border-radius: 10px;">
+            <span style="color:indianred;"><br /><b>Error!</b> There was some null fields please register again!.<br /><br /></span>
+        </div>
+    }
+    <div class="page-header">
+        <h2>Register</h2>
+    </div>
+
+    <form asp-controller="Home" asp-action="Register" method="post" onsubmit="return validation()">
+        <div class="form-group">
+            <label class="control-label" for="User_FirstName">First Name</label>
+            <input class="form-control" type="text" data-val="true" data-val-length="The field First Name must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="First name is required" id="User_FirstName" name="User.FirstName" value="@ViewBag.FirstName" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.FirstName" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_LastName">Last Name</label>
+            <input class="form-control" type="text" data-val="true" data-val-length="The field Last Name must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="Last name is required" id="User_LastName" name="User.LastName" value="@ViewBag.LastName" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.LastName" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_DateOfBirth">Date Of Birth</label>
+            <input class="form-control" type="date" data-val="true" data-val-length-max="50" data-val-required="Birthday is required" id="User_DateOfBirth" name="User.DateOfBirth" value="@ViewBag.Date" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.DateOfBirth" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_Address">Address</label>
+            <input class="form-control" type="text" data-val="true" data-val-length="The field Address must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="Address is required" id="User_Address" name="User.Address" value="@ViewBag.Address" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.Address" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_PostalCode">Postal Code</label>
+            <input class="form-control" type="text" data-val="true" data-val-length="The field PostalCode must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="Address is required" id="User_PostalCode" name="User.PostalCode" value="@ViewBag.PostalCode" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.PostalCode" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_City">City</label>
+            <input class="form-control" type="text" data-val="true" data-val-length="The field City must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="City is required" id="User_City" name="User.City" value="@ViewBag.City" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.City" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_Country">Country</label>
+            <input class="form-control" type="text" data-val="true" data-val-length="The field Country must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="Country is required" id="User_Country" name="User.Country" value="@ViewBag.Country" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.Country" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_EmailAddress">Email Address</label>
+            <input class="form-control" type="email" data-val="true" data-val-length="The field Email Address must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="Email Address is required" id="User_EmailAddress" name="User.EmailAddress" value="@ViewBag.EmailAddress" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.EmailAddress" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_Password">Password</label>
+            <input class="form-control" type="password" data-val="true" data-val-length="The field Password must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="Password is required" id="User_Password" name="User.Password" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.Password" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_RoleId">Role</label><br />
+            <select name="User.RoleId" id="User_RoleId" value="@Convert.ToInt32(ViewBag.Role)" class="form-control">
+                <option selected="selected" value="1">General User</option>
+                <option value="2">Admin</option>
+            </select>
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.RoleId" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="form-control">Register Name</button>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Http
+@model Assignment2.Models.BlogPost
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Add Blog";
+}
+
+<script>
+
+    function validation() {
+        if (document.getElementById('Title').value == "") {
+            alert('Please enter a Title');
+            document.getElementById('Title').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('ShortDescription').value == "") {
+            alert('Please enter a ShortDescription');
+            document.getElementById('ShortDescription').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Content').value == "") {
+            alert('Please enter a Content');
+            document.getElementById('Content').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Posted').value == "") {
+            alert('Please enter a Posted Date');
+            document.getElementById('Posted').style.borderColor = "red";
+            return false;
+        }
+    }
+</script>
+
+<h2>Add Blog Post</h2>
+<br />
+<br />
+
+<form asp-controller="Home" enctype="multipart/form-data" asp-action="SaveBlogPostAndRedirect" method="post" onsubmit="return validation()">
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_Title">Blog Post Title:</label>
+        <input class="form-control" asp-for="Title" type="text" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_ShortDescription">Blog Post Short Description:</label>
+        <input class="form-control" asp-for="ShortDescription" type="text" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_Content">Blog Post Content:</label>
+        <textarea rows="20" class="form-control" asp-for="Content" typeof="text" data-length="4000"></textarea>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_Posted">Posted: </label>
+        <input class="form-control" asp-for="Posted" typeof="date" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="BlogPost_IsAvailable">Is Available: </label>
+        <input asp-for="IsAvailable" typeof="checkbox" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="Photo_FileName">Add Image: </label>
+        <input type="file" name="files" multiple /><br />
+    </div>
+        <div class="form-group">
+            <button type="submit" class="form-control">Submit</button>
+        </div>
+</form>
+

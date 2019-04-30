@@ -1,0 +1,188 @@
+﻿@model IEnumerable<Assignment2.Models.BlogPost>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewBag.Title = "Home";
+}
+
+@using Microsoft.AspNetCore.Http;
+
+
+<html>
+<body>
+
+    @if (Model == null || Model.Count() == 0)
+    {
+        <br />
+        <ul class="list-group">
+            <li class="list-group-item">There are no blogs to display.</li>
+        </ul>
+    }
+    else
+    {
+
+        var i = 0;
+
+        foreach (var item in Model)
+        {
+            if (item.IsAvailable == true || (item.IsAvailable == false && @Context.Session.GetString("Role").Equals("2")))
+            {
+                if (i % 2 == 0)
+                {
+                    <div class="blogpost1">
+                        <div style="height:13px;font-size:1px;">&nbsp;</div>
+                        <h3>
+                            <a style='color: black;' asp-controller="Home" asp-action="DisplayFullBlogPost" asp-route-id="@item.BlogPostId">@item.Title</a>
+
+                            @if (@Context.Session.GetString("UserId") != null)
+                            {
+                                @if (Context.Session.GetString("Role").Equals("2"))
+                                {
+                                    <font style="font-size: 12px;"><text>(</text><a style='color: black;' asp-controller="Home" asp-action="EditBlogPost" asp-route-id="@item.BlogPostId">Edit</a> <text>|</text> <a style='color: black;' onclick="return confirm('Are you sure?');" asp-controller="Home" asp-action="DeleteBlogPost" asp-route-id="@item.BlogPostId">Delete</a><text>)</text></font>
+                                }
+                            }
+                        </h3>
+
+                        @{
+                            var count = 0;
+                            <p>
+                                Short Description:
+                                @for (int j = 0; j < item.ShortDescription.Length; j++)
+                                {
+                                    if (item.ShortDescription[j] != ' ')
+                                    {
+                                        if ((j + 1) == item.ShortDescription.Length)
+                                        {
+                                            count++;
+                                        }
+                                        else
+                                        {
+                                            if (item.ShortDescription[j + 1] == ' ')
+                                            {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    if (count == 100)
+                                    {
+                                        break;
+                                    }
+                                    @item.ShortDescription[j];
+                                }
+
+                                @if (count == 100)
+                                {
+
+                                    <br /><br /><a style='color: black;' asp-controller="Home" asp-action="DisplayFullBlogPost" asp-route-id="@item.BlogPostId">Read More</a>
+                                }
+                                <br />
+                                <div class="row" style="padding: 0px 0px 0px 15px;">
+                                    @foreach (var photo in item.Photo)
+                                    {
+
+                                        if (photo.Url.Substring(photo.Url.Length - 3, 3).Equals("mp4") || photo.Url.Substring(photo.Url.Length - 4, 4).Equals("webm"))
+                                        {
+                                            <a asp-controller="Home" asp-action="DisplayFullBlogPost" asp-route-id="@item.BlogPostId">
+                                                <video class="img-thumbnail" src="@photo.Url" style="width:200px; height:auto" autoplay muted loop></video>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@photo.Url" data-lightbox="gallery">
+                                                <img class="img-thumbnail" src="@photo.Url" style="width:150px; height:auto">
+                                            </a>
+
+                                        }
+                                        <span>&nbsp;</span>
+                                    }
+                                </div>
+                                <br /><br />Posted on: @item.Posted
+                            </p>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="blogpost">
+                        <div style="height:13px;font-size:1px;">&nbsp;</div>
+                        <h3>
+                            <a style='color: black;' asp-controller="Home" asp-action="DisplayFullBlogPost" asp-route-id="@item.BlogPostId">@item.Title</a>
+
+                            @if (@Context.Session.GetString("UserId") != null)
+                            {
+                                @if (Context.Session.GetString("Role").Equals("2"))
+                                {
+                                    <font style="font-size: 12px;"><text>(</text><a style='color: black;' asp-controller="Home" asp-action="EditBlogPost" asp-route-id="@item.BlogPostId">Edit</a> <text>|</text> <a style='color: black;' onclick="return confirm('Are you sure?');" asp-controller="Home" asp-action="DeleteBlogPost" asp-route-id="@item.BlogPostId">Delete</a><text>)</text></font>
+                                }
+                            }
+                        </h3>
+
+                        @{
+                            var count = 0;
+                            <p>
+                                Short Description:
+                                @for (int j = 0; j < item.ShortDescription.Length; j++)
+                                {
+                                    if (item.ShortDescription[j] != ' ')
+                                    {
+                                        if ((j + 1) == item.ShortDescription.Length)
+                                        {
+                                            count++;
+                                        }
+                                        else
+                                        {
+                                            if (item.ShortDescription[j + 1] == ' ')
+                                            {
+                                                count++;
+                                            }
+                                        }
+                                    }
+                                    if (count == 100)
+                                    {
+                                        break;
+                                    }
+                                    @item.ShortDescription[j];
+                                }
+
+                                @if (count == 100)
+                                {
+
+                                    <br /><br /><a style='color: black;' asp-controller="Home" asp-action="DisplayFullBlogPost" asp-route-id="@item.BlogPostId">Read More</a>
+                                }
+                                <br />
+                                <div class="row" style="padding: 0px 0px 0px 15px;">
+                                    @foreach (var photo in item.Photo)
+                                    {
+                                        if (photo.Url.Substring(photo.Url.Length - 3, 3).Equals("mp4") || photo.Url.Substring(photo.Url.Length - 4, 4).Equals("webm"))
+                                        {
+                                            <a asp-controller="Home" asp-action="DisplayFullBlogPost" asp-route-id="@item.BlogPostId">
+                                                <video class="img-thumbnail" src="@photo.Url" style="width:180px; height:auto" autoplay muted loop></video>
+                                            </a>
+                                        }
+                                        else
+                                        {
+
+
+
+                                            <a href="@photo.Url" data-lightbox="gallery">
+                                                <img class="img-thumbnail" src="@photo.Url" alt="Forest" style="width:150px; height:auto">
+                                            </a>
+                                        }
+                                            <span>&nbsp;</span>
+                                    }                                          
+                                </div>
+                                <br /><br />Posted on: @item.Posted
+                            </p>
+                        }
+                    </div>
+                }
+                i++;
+            }
+        }
+    }
+</body>
+</html>

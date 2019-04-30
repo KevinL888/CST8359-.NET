@@ -1,0 +1,146 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Assignment2.Models.User
+
+<script>
+
+    function validation() {
+        if (document.getElementById('FirstName').value == "") {
+            alert('Please enter a FirstName');
+            document.getElementById('FirstName').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('LastName').value == "") {
+            alert('Please enter a LastName');
+            document.getElementById('LastName').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('DateOfBirth').value == "") {
+            alert('Please enter a DateOfBirth');
+            document.getElementById('DateOfBirth').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Address').value == "") {
+            alert('Please enter a Address');
+            document.getElementById('Address').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('PostalCode').value == "") {
+            alert('Please enter a PostalCode');
+            document.getElementById('PostalCode').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('City').value == "") {
+            alert('Please enter a City');
+            document.getElementById('City').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Country').value == "") {
+            alert('Please enter a Country');
+            document.getElementById('Country').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('EmailAddress').value == "") {
+            alert('Please enter a EmailAddress');
+            document.getElementById('EmailAddress').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Password').value == "") {
+            alert('Please enter a Password');
+            document.getElementById('Password').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('RoleId').value == "") {
+            alert('Please select a Role');
+            document.getElementById('RoleId').style.borderColor = "red";
+            return false;
+        }
+    }
+</script>
+
+<html>
+
+<body>
+
+    @if (TempData["Edit"] != null)
+    {
+        <div style="width: auto; display: block; border: 1px solid DarkGrey; background-color: #f8ecf8; margin: 10px 0px 10px 0px; padding: 0px 20px 5px 20px; border-radius: 10px;">
+            <span style="color:indianred;"><br /><b>Error!</b> The email address is already in use.<br /><br /></span>
+        </div>
+    }
+    else if (TempData["NullField"] != null)
+    {
+        <div style="width: auto; display: block; border: 1px solid DarkGrey; background-color: #f8ecf8; margin: 10px 0px 10px 0px; padding: 0px 20px 5px 20px; border-radius: 10px;">
+            <span style="color:indianred;"><br /><b>Error!</b> There are some null fields please fill them in!<br /><br /></span>
+        </div>
+    }
+
+    <div class="page-header">
+        <h2>Edit Profile</h2>
+    </div>
+
+    <form asp-controller="Home" asp-action="EditProfile" method="post" onsubmit="return validation()">
+        <input type="hidden" value="@Model.UserId" name="UserId" />
+        <div class="form-group">
+            <label class="control-label" for="User_FirstName">First Name</label>
+            <input class="form-control" type="text" asp-for="FirstName" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.FirstName" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_LastName">Last Name</label>
+            <input class="form-control" type="text" asp-for="LastName" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.LastName" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_DateOfBirth">Date Of Birth</label>
+            <input class="form-control" type="date" asp-for="DateOfBirth" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.DateOfBirth" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_Address">Address</label>
+            <input class="form-control" type="text" asp-for="Address" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.Address" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_PostalCode">Postal Code</label>
+            <input class="form-control" type="text" asp-for="PostalCode" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.PostalCode" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_City">City</label>
+            <input class="form-control" type="text" asp-for="City" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.City" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_Country">Country</label>
+            <input class="form-control" type="text" asp-for="Country" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.Country" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_EmailAddress">Email Address</label>
+            <input class="form-control" type="email" asp-for="EmailAddress" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.EmailAddress" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_Password">Password</label>
+            <input class="form-control" type="password" asp-for="Password" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.Password" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="User_RoleId">Role</label><br />
+            <select asp-for="RoleId" class="form-control">
+                <option selected="selected" value="1">General User</option>
+                <option value="2">Admin</option>
+            </select>
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.RoleId" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="form-control">Edit Profile</button>
+        </div>
+    </form>
+
+</body>
+</html>
