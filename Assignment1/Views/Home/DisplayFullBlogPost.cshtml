@@ -1,0 +1,102 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Assignment1.Models.BlogPost
+@using Microsoft.AspNetCore.Http;
+
+
+<script>
+
+    function validation() {
+        if (document.getElementById('Comment.Content').value == "") {
+            alert('Please enter a Comment');
+            document.getElementById('Comment.Content').style.borderColor = "red";
+            return false;
+        }
+    }
+</script>
+
+
+<html>
+<body>
+
+    <h2>@Model.Title</h2>
+    <sub>Written by: @Model.User.FirstName @Model.User.LastName @Model.User.EmailAddress</sub>
+    <br />
+    <sub>Posted on: @Model.Posted</sub>
+    <br />
+    <br />
+    <p>
+        @Model.Content
+    </p>
+    <br />
+
+    <h4>Comments</h4>
+
+    @{
+        var i = 0;
+
+        foreach (var items in Model.Comment)
+        {
+            if (i % 2 == 0)
+            {
+                <div style="width: auto; display: block; border: 1px solid DarkGrey; margin: 10px 0px 10px 0px; padding: 0px 20px 5px 20px; border-radius: 10px;">
+                    <br />@items.Content<br /><br /><sub>By: @items.User.FirstName @items.User.LastName @items.User.EmailAddress</sub><br /><br />
+                </div>
+
+            }
+            else
+            {
+                <div style="width: auto; display: block; border: 1px solid DarkGrey; background-color: LightGrey; margin: 10px 0px 10px 0px; padding: 0px 20px 5px 20px; border-radius: 10px;">
+                    <br />@items.Content<br /><br /><sub>By: @items.User.FirstName @items.User.LastName @items.User.EmailAddress</sub><br /><br />
+                </div>
+
+            }
+            i++;
+        }
+    }
+
+
+    @if (Context.Session.GetString("UserId") == null)
+    {
+        <br />
+        <h4>Log In to Comment</h4>
+        <p><a asp-controller="Home" asp-action="Login">You must Log In to comment</a></p>
+    }
+    else
+    {
+
+        if (Model.Comment.Count == 0)
+        {
+            <div class="blogpost1">
+                <br />
+                Currently, there are no comments. Be the first to post!
+                <br /><br />
+            </div>
+
+        }
+
+        var UserId = Convert.ToInt32(Context.Session.GetString("UserId"));
+        <br />
+        <h4>Add Comment</h4>
+        <form asp-controller="Home" asp-action="DisplayFullBlogPost" method="post" onsubmit="return validation()">
+            <input type="hidden" id="BlogPostId" name="BlogPostId" value="@Model.BlogPostId" />
+            <input type="hidden" id="UserId" name="UserId" value="UserId" />
+            <div class="form-group">
+                <label class="control-label" for="Comment.Content">Comment Title</label>
+                <textarea rows="20" class="form-control" name="Comment.Content" typeof="text" data-length="4000"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="form-control">Comment</button>
+            </div>
+        </form>
+
+    }
+</body>
+</html>
+
+
+
+

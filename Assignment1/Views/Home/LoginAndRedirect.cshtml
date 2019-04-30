@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Assignment1.Models.User
+@using Microsoft.AspNetCore.Http;
+
+<script>
+
+    function validation() {
+        if (document.getElementById('EmailAddress').value == "") {
+            alert('Please enter a EmailAddress');
+            document.getElementById('EmailAddress').style.borderColor = "red";
+            return false;
+        }
+        if (document.getElementById('Password').value == "") {
+            alert('Please enter a Password');
+            document.getElementById('Password').style.borderColor = "red";
+            return false;
+        }
+    }
+</script>
+
+<html>
+
+<body>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div style="width: auto; display: block; border: 1px solid DarkGrey; background-color: #f8ecf8; margin: 10px 0px 10px 0px; padding: 0px 20px 5px 20px; border-radius: 10px;">
+            <span style="color:indianred;"><br /><b>Error!</b> The email address and password combination not found.<br /><br /></span>
+        </div>
+    }
+
+    <div class="page-header">
+        <h2>Login</h2>
+    </div>
+
+    <form asp-controller="Home" asp-action="LoginAndRedirect" method="post" onsubmit="return validation()">
+        <div class="form-group">
+            <label class="control-label" for="EmailAddress">Email Address</label>
+            <input class="form-control" type="email" data-val="true" data-val-length="The field Email Address must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="Email Address is required" id="EmailAddress" name="EmailAddress" value="@Context.Session.GetString("Email")" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="EmailAddress" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="Password">Password</label>
+            <input class="form-control" type="password" data-val="true" data-val-length="The field Password must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="Password is required" id="Password" name="Password" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="User.Password" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="form-control">Login Now</button>
+        </div>
+    </form>
+
+</body>
+</html>

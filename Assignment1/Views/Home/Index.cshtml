@@ -1,0 +1,142 @@
+﻿@model IEnumerable<Assignment1.Models.BlogPost>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewBag.Title = "Home";
+}
+
+@using Microsoft.AspNetCore.Http;
+
+<html>
+<body>
+
+    @if (Model == null || Model.Count() == 0)
+    {
+        <br />
+        <ul class="list-group">
+            <li class="list-group-item">There are no blogs to display.</li>
+        </ul>
+    }
+    else
+    {
+
+        var i = 0;
+
+        foreach (var item in Model)
+        {
+            if (i % 2 == 0)
+            {
+                <div style="width: auto; display: block; border: 1px solid DarkGrey; margin: 10px 0px 10px 0px; padding: 0px 20px 5px 20px; border-radius: 10px;">
+                    <div style="height:13px;font-size:1px;">&nbsp;</div>
+                    <h3>
+                        <a asp-controller="Home" asp-action="DisplayFullBlogPost" asp-route-id="@item.BlogPostId">@item.Title</a>
+
+                        @if (@Context.Session.GetString("UserId") != null)
+                        {
+                            @if (Context.Session.GetString("Role").Equals("2"))
+                            {
+                                <font style="font-size: 12px;"><text>(</text><a asp-controller="Home" asp-action="EditBlogPost" asp-route-id="@item.BlogPostId">Edit</a> <text>|</text> <a onclick="return confirm('Are you sure?');" asp-controller="Home" asp-action="DeleteBlogPost" asp-route-id="@item.BlogPostId">Delete</a><text>)</text></font>
+                            }
+                        }
+                    </h3>
+
+                    @{
+                        var count = 0;
+                        <p>
+                            @for (int j = 0; j < item.Content.Length; j++)
+                            {
+                                if (item.Content[j] != ' ')
+                                {
+                                    if ((j + 1) == item.Content.Length)
+                                    {
+                                        count++;
+                                    }
+                                    else
+                                    {
+                                        if (item.Content[j + 1] == ' ')
+                                        {
+                                            count++;
+                                        }
+                                    }
+                                }
+                                if (count == 100)
+                                {
+                                    break;
+                                }
+                                @item.Content[j];
+                            }
+
+                            @if (count == 100)
+                            {
+
+                                <br /><br /><a asp-controller="Home" asp-action="DisplayFullBlogPost" asp-route-id="@item.BlogPostId">Read More</a>
+                            }
+                            <br /><br />Posted on: @item.Posted
+                        </p>
+                    }
+                </div>
+            }
+            else
+            {
+                <div style="width: auto; display: block; border: 1px solid DarkGrey; background-color: LightGrey; margin: 10px 0px 10px 0px; padding: 0px 20px 5px 20px; border-radius: 10px;">
+                    <div style="height:13px;font-size:1px;">&nbsp;</div>
+                    <h3>
+                        <a asp-controller="Home" asp-action="DisplayFullBlogPost" asp-route-id="@item.BlogPostId">@item.Title</a>
+
+                        @if (@Context.Session.GetString("UserId") != null)
+                        {
+                            @if (Context.Session.GetString("Role").Equals("2"))
+                            {
+                                <font style="font-size: 12px;"><text>(</text><a asp-controller="Home" asp-action="EditBlogPost" asp-route-id="@item.BlogPostId">Edit</a> <text>|</text> <a onclick="return confirm('Are you sure?');" asp-controller="Home" asp-action="DeleteBlogPost" asp-route-id="@item.BlogPostId">Delete</a><text>)</text></font>
+                            }
+                        }
+                    </h3>
+                    @{
+                        var count = 0;
+                        <p>
+                            @for (int j = 0; j < item.Content.Length; j++)
+                            {
+                                if (item.Content[j] != ' ')
+                                {
+                                    if ((j + 1) == item.Content.Length)
+                                    {
+                                        count++;
+                                    }
+                                    else
+                                    {
+                                        if (item.Content[j + 1] == ' ')
+                                        {
+                                            count++;
+                                        }
+                                    }
+                                }
+                                if (count == 100)
+                                {
+                                    break;
+                                }
+                                @item.Content[j];
+                            }
+
+                            @if (count == 100)
+                            {
+
+                                <br /><br /><a asp-controller="Home" asp-action="DisplayFullBlogPost" asp-route-id="@item.BlogPostId">Read More</a>
+                            }
+
+                            <br /><br />Posted on: @item.Posted
+                        </p>
+                    }
+                </div>
+            }
+            i++;
+        }
+
+
+    }
+</body>
+</html>
+
